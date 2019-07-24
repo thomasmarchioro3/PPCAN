@@ -22,3 +22,6 @@
 
 # Data Files
 /data/
+
+# Cache
+*/__pycache__
