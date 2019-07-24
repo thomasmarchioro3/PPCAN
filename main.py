@@ -57,13 +57,13 @@ def run_main(ARGS):
 
     num_complete_train = 5
 
-    train_epochs = 4
+    train_epochs = 40
 
-    prelim_iterations = 3
-    legitimate_iterations = 5
-    adversary_iterations = 4
+    prelim_iterations = 30000
+    legitimate_iterations = 500
+    adversary_iterations = 4000
 
-    test_iterations = 1
+    test_iterations = 10000
 
     alpha = 0.95
 
