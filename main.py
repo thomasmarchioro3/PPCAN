@@ -27,7 +27,7 @@ def parse_args():
 def test_cifar(helper, slug):
     print("\nPlotting random images.")
     image_sample, __ = helper.random_batch(batch_size=9)
-    helper.save_images(image_sample)
+    helper.save_images(image_sample, slug)
     return
 
 def run_main(ARGS):
