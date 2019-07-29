@@ -1,0 +1,15 @@
+#!/bin/bash
+#$ -N edsr
+#$ -cwd
+#$ -q gpu
+#$ -e error_marchiorot.e
+#$ -o output_marchiorot.o
+#$ -m bea
+
+source /nfsd/opt/anaconda3/anaconda3.sh
+conda activate /nfsd/opt/anaconda3/tensorflow
+
+python main.py --adv_channel_snr 0
+python main.py --adv_channel_snr 10
+python main.py --adv_channel_snr -10
+python main.py --adv_channel_snr -15
