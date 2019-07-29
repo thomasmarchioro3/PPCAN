@@ -194,7 +194,7 @@ def run_main(ARGS):
         return
 
     def plot_confusion_matrix(y_true, y_pred, classes, counter, slug,
-                          normalize=False,
+                          normalize=True,
                           title=None,
                           cmap=plt.cm.Blues):
 
@@ -227,7 +227,7 @@ def run_main(ARGS):
         if not os.path.exists(directory):
             os.makedirs(directory)
 
-        plt.savefig(directory+'/cm_'+str(counter)+'.png')
+        plt.savefig(directory+'/cm_'+str(counter)+'.png', pad_inches=0.1)
 
         return ax
 
