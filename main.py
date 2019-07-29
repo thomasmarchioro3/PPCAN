@@ -325,9 +325,11 @@ def run_main(ARGS):
         legit_total_iterations = 0
         adv_total_iterations = 0
         mse_0 = test_mse_legit(session)
+
         print("MSE of the legitimate channel before any iteration: {0:.2}".format(mse_0))
 
         cross_entropy_0, accuracy_0 = test_adversary(session)
+
         print("Cross_entropy of adversary's softmax outputs before any iteration: {0:.4}".format(cross_entropy_0))
         print("Accuracy of adversary's predictions  before any iteration: {0:.4}".format(accuracy_0))
 
@@ -335,7 +337,9 @@ def run_main(ARGS):
 
         # PRELIMINARY TRAINING OF THE LEGITIMATE CHANNEL
         train_legit_prelim(session,prelim_iterations)
+        mse_container.update_iter_list(0)
         mse_1 = test_mse_legit(session)
+        mse_container.append_elem(mse_1)
         print("MSE of the legitimate channel after preliminary training: {0:.2}".format(mse_1))
 
         print("")
@@ -343,6 +347,8 @@ def run_main(ARGS):
         # PRELIMINARY TRAINING OF THE ADVERSARY'S NETWORK
         train_adversary(session,prelim_iterations)
         cross_entropy_1, accuracy_1 = test_adversary(session)
+        acc_container.update_iter_list(0)
+        acc_container.append_elem(accuracy_1)
         print("Cross_entropy of adversary's softmax outputs after preliminary training: {0:.4}".format(cross_entropy_1))
         print("Accuracy of adversary's predictions after preliminary training: {0:.4}".format(accuracy_1))
 
@@ -358,6 +364,13 @@ def run_main(ARGS):
 
         mse_container.write_matrix(mse_filename, directory)
         acc_container.write_matrix(acc_filename, directory)
+
+        saver = tf.train.Saver()
+        save_dir = "trained/model"+slug+"/sim_"+str(i)
+        if save_dir != "" and not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+        save_path = saver.save(session, save_dir+"/model.ckpt")
+        print("Model saved in path: %s" % save_path)
 
         sim_end_time = time.time()
         delta_time = sim_end_time - sim_start_time

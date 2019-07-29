@@ -97,3 +97,6 @@ class cifar_helper:
         y_batch = self.labels_train[idx, :]
 
         return x_batch, y_batch
+
+    def get_class_names(self):
+        return self.class_names
