@@ -257,10 +257,10 @@ def run_main(ARGS):
 
     def save_results(name, res_list, slug):
         filename = name+"_test_results.csv"
-        directory="test/test"+slug
+        directory="results/test"
         if directory != "" and not os.path.exists(directory):
             os.makedirs(directory)
-        filename = filename if directory=="" else directory+"/"+filename
+        filename = filename if directory=="" else directory+"/"+name+slug
         with open(filename, 'w+') as csvfile:
             csv_writer = csv.writer(csvfile, delimiter=' ')
             csv_writer.writerow(res_list)

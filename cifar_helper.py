@@ -24,7 +24,7 @@ class cifar_helper:
         return
 
     # Helper function for plotting images
-    def save_images(self, images, slug="", type='example', cls_true=None, cls_pred=None, smooth=True):
+    def save_images(self, images, slug="", type='example', cls_true=None, cls_pred=None, smooth=True, mode='train'):
 
         assert len(images) == 9
 
@@ -74,11 +74,16 @@ class cifar_helper:
         # in a single Notebook cell.
         #plt.show(block = False)
 
-        directory = 'figures'+slug
+        directory = 'results/figures'+slug
+        if mode == 'train':
+            directory = 'results/train/figures'+slug
+        if mode == 'test':
+            directory = 'results/test/figures'+slug
+
         if not os.path.exists(directory):
             os.makedirs(directory)
 
-        plt.savefig(directory+'/'+str(self.counter)+'_'+type+'.png')
+        plt.savefig(directory+'/'+str(self.counter)+'_'+type+'.png' ,dpi = 200)
         self.counter = self.counter + 1
 
         return
