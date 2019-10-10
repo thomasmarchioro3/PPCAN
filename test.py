@@ -180,9 +180,9 @@ def run_main(ARGS):
         images_dec_print = session.run(image_dec, feed_dict=feed_dict_print)
 
         #print("Sample of images at the transmitter side.")
-        helper.save_images(images_print, slug, type='tx')
+        helper.save_images(images_print, slug, type='tx', cls_true=None, cls_pred=None, smooth=True, mode='test')
         #print("Sample of images at the receiver side.")
-        helper.save_images(images_dec_print, slug, type='rc')
+        helper.save_images(images_dec_print, slug, type='rc', cls_true=None, cls_pred=None, smooth=True, mode='test')
         return
 
     def test_print_adv(session, slug):
@@ -190,7 +190,7 @@ def run_main(ARGS):
 
         cls_true_print = session.run(cls_true, feed_dict=feed_dict_print)
         cls_pred_print = session.run(cls_pred, feed_dict=feed_dict_print)
-        helper.save_images(images_print, slug, type='adv_pred', cls_true=cls_true_print, cls_pred=cls_pred_print)
+        helper.save_images(images_print, slug, type='adv_pred', cls_true=cls_true_print, cls_pred=cls_pred_print, mode='test')
         return
 
     def plot_confusion_matrix(y_true, y_pred, classes, counter, slug,
@@ -223,7 +223,7 @@ def run_main(ARGS):
         plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
                  rotation_mode="anchor")
 
-        directory = 'figures/figures'+slug
+        directory = 'results/test/figures'+slug
         if not os.path.exists(directory):
             os.makedirs(directory)
 
@@ -251,6 +251,9 @@ def run_main(ARGS):
                               normalize=True,
                               title=None,
                               cmap=plt.cm.Blues)
+
+        test_print_legit(session, slug_test)
+        test_print_adv(session, slug_test)
 
         mse_list.append(mse_t)
         acc_list.append(acc_t)

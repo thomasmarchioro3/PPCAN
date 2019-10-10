@@ -66,7 +66,7 @@ class cifar_helper:
             # Show the classes as the label on the x-axis.
             ax.set_xlabel(xlabel)
 
-            # Remove ticks from the plot.
+            # Remove ticks from thelot.
             ax.set_xticks([])
             ax.set_yticks([])
 

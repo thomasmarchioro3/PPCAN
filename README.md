@@ -20,8 +20,7 @@ The simplest way is to install it through Anaconda:
 - Open Jupyter Lab, open a new terminal and navigate to the path of the repository
 
 ## Usage guide
-To run a training simulation, use either <code>python ./train.py</code> or <code>python ./trainv2.py</code>.
+To run a simulation, use <code>python ./main.py</code>.
 You can also set some parameters:
-- The tradeoff parameter alpha: for example, to set alpha equal to 0.2 <code>python ./train.py --alpha 0.2</code> (default is 0.95)
-- SNR of the legitimate channel: for example, to set the SNR to 20dB <code>python ./train.py --legit_channel_snr 20</code> (default is 10)
-- SNR of the adversary's channel: for example, to set the SNR to -10dB <code>python ./train.py --adv_channel_snr -10</code> (default is 5)
+- SNR of the legitimate channel: for example, to set the SNR to 20dB <code>python ./main.py --legit_channel_snr 20</code> (default is 10)
+- SNR of the adversary's channel: for example, to set the SNR to -10dB <code>python ./main.py --adv_channel_snr -10</code> (default is 5)
