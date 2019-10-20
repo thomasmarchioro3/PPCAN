@@ -109,35 +109,30 @@ def run_main(ARGS):
     print("\nSetting the parameters.")
 
     learning_rate = 1e-4
-    batch_train = 32
+    batch_train = 128
 
-    num_complete_train = 5
+    num_complete_train = 1
 
-    train_epochs = 40
+    train_epochs = 4
 
-    prelim_iterations = 30000
-    legitimate_iterations = 500
-    adversary_iterations = 4000
+    prelim_iterations = 3
+    legitimate_iterations = 5
+    adversary_iterations = 2
 
-    test_iterations = 10000
+    test_iterations = 1
 
     alpha = ARGS.alpha
 
     SNR_legit_dB = ARGS.legit_channel_snr
     SNR_adv_dB = ARGS.adv_channel_snr
+    num_clusters = 1
 
     # cluster vector: classes with same value are put in the same cluster
     # classes are: 0 airplane, 1 automobile, 2 bird, 3 cat, 4 deer,
     # 5 dog, 6 frog, 7 horse, 8 ship, 9 truck
     cluster_vector = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
-    slug = "_alpha{0:.2}_A{1}_B{2}".format(alpha, int(SNR_legit_dB), int(SNR_adv_dB))
-
-    mse_oom = 0.1
-    cross_entropy_oom = 2.5
-    beta = mse_oom/cross_entropy_oom
-
-    print("Normalization value: {0:.3}".format(beta))
+    slug = "_alpha{0:.2}_M{1}_E{2}_k{3}".format(alpha, int(SNR_legit_dB), int(SNR_adv_dB), int(num_clusters))
 
     ###################
     # DEFINING CHANNELS
@@ -146,7 +141,7 @@ def run_main(ARGS):
     print("\nDefining standard deviation of the channels.")
 
     def SNR_to_stddev(SNR_dB):
-        stddev = math.sqrt(10**(-SNR_dB/10))
+        stddev = 10**(-SNR_dB/20)
         return stddev
 
     sigma_legit = SNR_to_stddev(SNR_legit_dB)
@@ -184,8 +179,6 @@ def run_main(ARGS):
     E, num_clusters = pmf_equalizer_v2(cluster_vector)
     equalized = tf.matmul(tf.cast(one_hot_true, tf.float64), tf.convert_to_tensor(E))
 
-    slug = slug + "_k{0}".format(num_clusters)
-
     test_cifar(helper, slug)
 
     # plotting equalization matrix
@@ -202,23 +195,23 @@ def run_main(ARGS):
     global_step = tf.Variable(initial_value=0,
                           name='global_step', trainable=False)
 
-    def mse_optimizer(t_in, t_out, var_list, learning_rate=1e-3):
+    def mse_optimizer(t_in, t_out, var_list, learning_rate=1e-4):
         optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
         mse = tf.losses.mean_squared_error(t_in, t_out)
         optimizer = optimizer.minimize(mse, var_list=var_list)
         return optimizer, mse
 
-    def cross_entropy_optimizer(t_true, t_pred, var_list, learning_rate=1e-3):
+    def cross_entropy_optimizer(t_true, t_pred, var_list, learning_rate=1e-4):
         optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
         cross_entropy = tf.nn.softmax_cross_entropy_with_logits_v2(logits=t_pred,labels=t_true)
         optimizer = optimizer.minimize(cross_entropy,var_list=var_list)
         return optimizer, cross_entropy
 
-    def mse_cross_entropy_optimizer(t_in, t_out, t_false, t_pred, var_list, alpha=0.2, beta=0.04, learning_rate=1e-3):
+    def mse_cross_entropy_optimizer(t_in, t_out, t_false, t_pred, var_list, alpha=0.2, learning_rate=1e-4):
         optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
         mse = tf.losses.mean_squared_error(t_in, t_out)
         cross_entropy = tf.nn.softmax_cross_entropy_with_logits_v2(logits=t_pred,labels=t_false)
-        loss = (1-alpha)*mse + beta*alpha*cross_entropy
+        loss = mse + alpha*cross_entropy
         optimizer = optimizer.minimize(loss, var_list=var_list)
         return optimizer
 
@@ -229,7 +222,7 @@ def run_main(ARGS):
 
     optimizer1, mse = mse_optimizer(image, image_dec, var_list=legitimate_vars, learning_rate=learning_rate)
     optimizer2, cross_entropy = cross_entropy_optimizer(one_hot_true, soft, var_list=adversary_vars, learning_rate=learning_rate)
-    optimizer3 = mse_cross_entropy_optimizer(image, image_dec, equalized, soft, var_list=legitimate_vars, alpha=alpha, beta=beta, learning_rate=learning_rate)
+    optimizer3 = mse_cross_entropy_optimizer(image, image_dec, equalized, soft, var_list=legitimate_vars, alpha=alpha, learning_rate=learning_rate)
 
     #avg_cross_entropy = tf.metrics.mean(cross_entropy)
     correct_prediction = tf.equal(cls_pred, cls_true)

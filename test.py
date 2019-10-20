@@ -53,13 +53,12 @@ def run_main(ARGS):
     print("\nSetting the parameters.")
 
     learning_rate = 1e-4
-    batch_train = 32
 
     num_complete_train = 5
 
     test_iterations = 10000
 
-    alpha = 0.95
+    alpha = 0.8
 
     SNR_legit_dB_train = 10
 
@@ -69,14 +68,8 @@ def run_main(ARGS):
 
     SNR_adv_dB_test = ARGS.adv_channel_snr
 
-    slug_train = "_alpha{0:.2}_A{1}_B{2}".format(alpha, int(SNR_legit_dB_train), int(SNR_adv_dB_train))
-    slug_test = "_alpha{0:.2}_A{1}_B{2}".format(alpha, int(SNR_legit_dB_test), int(SNR_adv_dB_test))
-
-    mse_oom = 0.1
-    cross_entropy_oom = 2.5
-    beta = mse_oom/cross_entropy_oom
-
-    print("Normalization value: {0:.3}".format(beta))
+    slug_train = "_alpha{0:.2}_M{1}_E{2}".format(alpha, int(SNR_legit_dB_train), int(SNR_adv_dB_train))
+    slug_test = "_alpha{0:.2}_M{1}_E{2}".format(alpha, int(SNR_legit_dB_test), int(SNR_adv_dB_test))
 
     ###################
     # DEFINING CHANNELS
@@ -206,6 +199,7 @@ def run_main(ARGS):
 
         # Compute confusion matrix
         cm = confusion_matrix(y_true, y_pred)
+		cm = cm / cm.astype(np.float).sum(axis=1)
 
         fig, ax = plt.subplots(frameon=False)
         im = ax.imshow(cm, interpolation='nearest', cmap=cmap)
@@ -223,7 +217,7 @@ def run_main(ARGS):
         plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
                  rotation_mode="anchor")
 
-        directory = 'results/test/figures'+slug
+        directory = "C:/Users/Thomas/Dropbox/PPCAN/"+"results/test/figures"+slug
         if not os.path.exists(directory):
             os.makedirs(directory)
 
@@ -260,7 +254,7 @@ def run_main(ARGS):
 
     def save_results(name, res_list, slug):
         filename = name+"_test_results.csv"
-        directory="results/test"
+        directory="C:/Users/Thomas/Dropbox/PPCAN/"+"results/test"
         if directory != "" and not os.path.exists(directory):
             os.makedirs(directory)
         filename = filename if directory=="" else directory+"/"+name+slug

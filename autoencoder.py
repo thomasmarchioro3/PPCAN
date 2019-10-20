@@ -13,16 +13,9 @@ image_width = cf.img_size
 image_height = cf.img_size
 image_channels = cf.num_channels
 
-x_width = image_width/4
-x_height = image_height/4
-
-C_OUT = 16
+C_OUT = 32
 CHANNEL_TYPE = ch.CHANNEL_TYPE
 REAL_CHANNEL = ch.REAL_CHANNEL
-CHANNEL_SNR = 12
-
-xx = tf.placeholder(tf.float32, [None, x_width, x_height, C_OUT])
-INTER_SHAPE = tf.shape(xx)
 
 # topology of the NN
 NN_PARAMS = {

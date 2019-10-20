@@ -53,13 +53,12 @@ def run_main(ARGS):
     print("\nSetting the parameters.")
 
     learning_rate = 1e-4
-    batch_train = 32
 
     num_complete_train = 5
 
     test_iterations = 10000
 
-    alpha = 0.95
+    alpha = 0.8
 
     SNR_legit_dB_train = 10
 
@@ -71,8 +70,8 @@ def run_main(ARGS):
 
     num_clusters = 1
 
-    slug_train = "_alpha{0:.2}_A{1}_B{2}_k{3}".format(alpha, int(SNR_legit_dB_train), int(SNR_adv_dB_train), int(num_clusters))
-    slug_test = "_alpha{0:.2}_A{1}_B{2}_k{3}".format(alpha, int(SNR_legit_dB_test), int(SNR_adv_dB_test), int(num_clusters))
+    slug_train = "_alpha{0:.2}_M{1}_E{2}_k{3}".format(alpha, int(SNR_legit_dB_train), int(SNR_adv_dB_train), int(num_clusters))
+    slug_test = "_alpha{0:.2}_M{1}_E{2}_k{3}".format(alpha, int(SNR_legit_dB_test), int(SNR_adv_dB_test), int(num_clusters))
 
     #print(slug_train)
 
@@ -216,7 +215,7 @@ def run_main(ARGS):
         plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
                  rotation_mode="anchor")
 
-        directory = 'results/test/figures'+slug
+        directory = "C:/Users/Thomas/Dropbox/PPCAN/"+'results/test/figures'+slug
         if not os.path.exists(directory):
             os.makedirs(directory)
 

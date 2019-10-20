@@ -76,9 +76,9 @@ class cifar_helper:
 
         directory = 'results/figures'+slug
         if mode == 'train':
-            directory = 'results/train/figures'+slug
+            directory = "C:/Users/Thomas/Dropbox/PPCAN/"+'results/train/figures'+slug
         if mode == 'test':
-            directory = 'results/test/figures'+slug
+            directory = "C:/Users/Thomas/Dropbox/PPCAN/"+'results/test/figures'+slug
 
         if not os.path.exists(directory):
             os.makedirs(directory)

@@ -56,15 +56,15 @@ def run_main(ARGS):
     print("\nSetting the parameters.")
 
     learning_rate = 1e-4
-    batch_train = 32
+    batch_train = 128
 
     num_complete_train = 5
 
     train_epochs = 40
 
-    prelim_iterations = 30000
+    prelim_iterations = 10000
     legitimate_iterations = 500
-    adversary_iterations = 4000
+    adversary_iterations = 2000
 
     test_iterations = 10000
 
@@ -73,15 +73,9 @@ def run_main(ARGS):
     SNR_legit_dB = ARGS.legit_channel_snr
     SNR_adv_dB = ARGS.adv_channel_snr
 
-    slug = "_alpha{0:.2}_A{1}_B{2}".format(alpha, int(SNR_legit_dB), int(SNR_adv_dB))
+    slug = "_alpha{0:.2}_M{1}_E{2}".format(alpha, int(SNR_legit_dB), int(SNR_adv_dB))
 
     test_cifar(helper, slug)
-
-    mse_oom = 0.1
-    cross_entropy_oom = 2.5
-    beta = mse_oom/cross_entropy_oom
-
-    print("Normalization value: {0:.3}".format(beta))
 
     ###################
     # DEFINING CHANNELS
@@ -90,7 +84,7 @@ def run_main(ARGS):
     print("\nDefining standard deviation of the channels.")
 
     def SNR_to_stddev(SNR_dB):
-        stddev = math.sqrt(10**(-SNR_dB/10))
+        stddev = 10**(-SNR_dB/20)
         return stddev
 
     sigma_legit = SNR_to_stddev(SNR_legit_dB)
@@ -127,23 +121,23 @@ def run_main(ARGS):
     global_step = tf.Variable(initial_value=0,
                           name='global_step', trainable=False)
 
-    def mse_optimizer(t_in, t_out, var_list, learning_rate=1e-3):
+    def mse_optimizer(t_in, t_out, var_list, learning_rate=1e-4):
         optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
         mse = tf.losses.mean_squared_error(t_in, t_out)
         optimizer = optimizer.minimize(mse, var_list=var_list)
         return optimizer, mse
 
-    def cross_entropy_optimizer(t_true, t_pred, var_list, learning_rate=1e-3):
+    def cross_entropy_optimizer(t_true, t_pred, var_list, learning_rate=1e-4):
         optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
         cross_entropy = tf.nn.softmax_cross_entropy_with_logits_v2(logits=t_pred,labels=t_true)
         optimizer = optimizer.minimize(cross_entropy,var_list=var_list)
         return optimizer, cross_entropy
 
-    def mse_cross_entropy_optimizer(t_in, t_out, t_true, t_pred, var_list, alpha=0.2, beta=0.04, learning_rate=1e-3):
+    def mse_cross_entropy_optimizer(t_in, t_out, t_true, t_pred, var_list, alpha=0.2, learning_rate=1e-4):
         optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
         mse = tf.losses.mean_squared_error(t_in, t_out)
         cross_entropy = tf.nn.softmax_cross_entropy_with_logits_v2(logits=t_pred,labels=t_true)
-        loss = (1-alpha)*mse - beta*alpha*cross_entropy
+        loss = mse - alpha*cross_entropy
         optimizer = optimizer.minimize(loss, var_list=var_list)
         return optimizer
 
@@ -154,7 +148,7 @@ def run_main(ARGS):
 
     optimizer1, mse = mse_optimizer(image, image_dec, var_list=legitimate_vars, learning_rate=learning_rate)
     optimizer2, cross_entropy = cross_entropy_optimizer(one_hot_true, soft, var_list=adversary_vars, learning_rate=learning_rate)
-    optimizer3 = mse_cross_entropy_optimizer(image, image_dec, one_hot_true, soft, var_list=legitimate_vars, alpha=alpha, beta=beta, learning_rate=learning_rate)
+    optimizer3 = mse_cross_entropy_optimizer(image, image_dec, one_hot_true, soft, var_list=legitimate_vars, alpha=alpha, learning_rate=learning_rate)
 
     #avg_cross_entropy = tf.metrics.mean(cross_entropy)
     correct_prediction = tf.equal(cls_pred, cls_true)
@@ -271,7 +265,7 @@ def run_main(ARGS):
     mse_container = mc.measure_container(aim="low")
     acc_container = mc.measure_container(aim="high", MAX_VALUE=100)
 
-    directory="results/train"
+    directory="C:/Users/Thomas/Dropbox/PPCAN/"+"results/train"
     mse_filename = "mse"+slug+".csv"
     acc_filename = "acc"+slug+".csv"
 
