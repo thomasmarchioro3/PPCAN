@@ -9,12 +9,11 @@
 source /nfsd/opt/anaconda3/anaconda3.sh
 conda activate /nfsd/opt/anaconda3/tensorflow
 
-python recadvv2.py --alpha 0.125
-python recadvv2.py --alpha 0.25
-python recadvv2.py --alpha 0.5
-python recadvv2.py --alpha 1
-python recadvv2.py --alpha 2
-python recadvv2.py --alpha 4
-python recadvv2.py --alpha 1.0
-python recadvv2.py --alpha 2.0
-python recadvv2.py --alpha 4.0
+python -u main.py --mode 1 --alpha 0.25
+python -u main.py --mode 1 --alpha 0.5
+python -u main.py --mode 1 --alpha 1
+python -u main.py --mode 1 --alpha 2
+python -u main.py --mode 1 --alpha 4
+
+./run_train.sh
+./run_train.sh --ALPHA 0.5
