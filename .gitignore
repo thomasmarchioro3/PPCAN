@@ -1,12 +1,3 @@
-# Compiled class file
-*.class
-
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
 # Package Files
 *.jar
 *.war
@@ -16,15 +7,11 @@
 *.tar.gz
 *.rar
 
-# Maven output directory
-/target/
-/javadoc/
-
 # Data Files
 /data/
 
+# Saved models
+*/saved/
+
 # Cache
-__pycache__/
-__pycache__/*
-*/__pycache__/
 */__pycache__/*
