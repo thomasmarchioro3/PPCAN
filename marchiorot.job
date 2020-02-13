@@ -10,10 +10,10 @@ source /nfsd/opt/anaconda3/anaconda3.sh
 conda activate /nfsd/opt/anaconda3/tensorflow
 
 python -u main.py --mode 1 --alpha 0.25
-python -u main.py --mode 1 --alpha 0.5
-python -u main.py --mode 1 --alpha 1
-python -u main.py --mode 1 --alpha 2
-python -u main.py --mode 1 --alpha 4
+python -u main.py --mode 2 --alpha 0.5
 
-./run_train.sh
-./run_train.sh --ALPHA 0.5
+chmod +x train_exp_1.sh
+chmod +x train_exp_2.sh
+
+./train_exp_1.sh
+./train_exp_2.sh
