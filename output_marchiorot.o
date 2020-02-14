@@ -1,0 +1,161 @@
+GPU 1 chosen to start job
+#######################################
+Current execution paramenters:
+acc_epsilon_2: 0.001
+acc_epsilon_3: 0.001
+alpha: 0.25
+batch_size: 32
+conv_depth: 16
+data_dir_test: data
+data_dir_train: data
+dataset: cifar
+delete_prev_model_1: False
+delete_prev_model_2: False
+learn_rate: 0.0001
+loss_type: 2
+mode: 1
+mse_epsilon_1: 0.0001
+mse_epsilon_3: 0.0001
+num_clusters: 1
+num_simulations: 5
+reach_convergence_1: False
+reach_convergence_2: False
+reach_convergence_3: True
+skip_phase_1: False
+skip_phase_2: False
+snr_adv_test: 5
+snr_adv_train: 5
+snr_legit_test: 10
+snr_legit_train: 10
+test_dir: results
+train_dir: results
+train_epochs_1: 1
+train_epochs_2: 1
+train_epochs_3: 40
+train_iters_adv_2: 30000
+train_iters_adv_3: 4000
+train_iters_legit_1: 30000
+train_iters_legit_3: 500
+#######################################
+
+Bandwidth:  0.3333333333333333
+#######################################
+Current execution paramenters:
+acc_epsilon_2: 0.001
+acc_epsilon_3: 0.001
+alpha: 0.5
+batch_size: 32
+conv_depth: 16
+data_dir_test: data
+data_dir_train: data
+dataset: cifar
+delete_prev_model_1: False
+delete_prev_model_2: False
+learn_rate: 0.0001
+loss_type: 2
+mode: 2
+mse_epsilon_1: 0.0001
+mse_epsilon_3: 0.0001
+num_clusters: 1
+num_simulations: 5
+reach_convergence_1: False
+reach_convergence_2: False
+reach_convergence_3: True
+skip_phase_1: False
+skip_phase_2: False
+snr_adv_test: 5
+snr_adv_train: 5
+snr_legit_test: 10
+snr_legit_train: 10
+test_dir: results
+train_dir: results
+train_epochs_1: 1
+train_epochs_2: 1
+train_epochs_3: 40
+train_iters_adv_2: 30000
+train_iters_adv_3: 4000
+train_iters_legit_1: 30000
+train_iters_legit_3: 500
+#######################################
+
+Bandwidth:  0.3333333333333333
+#######################################
+Current execution paramenters:
+acc_epsilon_2: 0.001
+acc_epsilon_3: 0.001
+alpha: 1.0
+batch_size: 64
+conv_depth: 16.0
+data_dir_test: data
+data_dir_train: data
+dataset: cifar
+delete_prev_model_1: False
+delete_prev_model_2: False
+learn_rate: 0.0001
+loss_type: 2
+mode: train
+mse_epsilon_1: 0.0001
+mse_epsilon_3: 0.0001
+num_clusters: 1
+num_simulations: 5
+reach_convergence_1: False
+reach_convergence_2: False
+reach_convergence_3: False
+skip_phase_1: False
+skip_phase_2: False
+snr_adv_test: 5
+snr_adv_train: 5.0
+snr_legit_test: 10
+snr_legit_train: 10.0
+test_dir: results_exp1
+train_dir: results_exp1
+train_epochs_1: 1
+train_epochs_2: 1
+train_epochs_3: 80
+train_iters_adv_2: 4000
+train_iters_adv_3: 8000
+train_iters_legit_1: 500
+train_iters_legit_3: 500
+#######################################
+
+Bandwidth:  0.3333333333333333
+#######################################
+Current execution paramenters:
+acc_epsilon_2: 0.001
+acc_epsilon_3: 0.001
+alpha: 1.0
+batch_size: 64
+conv_depth: 16.0
+data_dir_test: data
+data_dir_train: data
+dataset: cifar
+delete_prev_model_1: False
+delete_prev_model_2: False
+learn_rate: 0.0001
+loss_type: 2
+mode: train
+mse_epsilon_1: 0.0001
+mse_epsilon_3: 0.0001
+num_clusters: 1
+num_simulations: 5
+reach_convergence_1: False
+reach_convergence_2: False
+reach_convergence_3: False
+skip_phase_1: False
+skip_phase_2: False
+snr_adv_test: 5
+snr_adv_train: 5.0
+snr_legit_test: 10
+snr_legit_train: 10.0
+test_dir: results_exp2
+train_dir: results_exp2
+train_epochs_1: 1
+train_epochs_2: 1
+train_epochs_3: 80
+train_iters_adv_2: 30000
+train_iters_adv_3: 8000
+train_iters_legit_1: 30000
+train_iters_legit_3: 500
+#######################################
+
+Bandwidth:  0.3333333333333333
